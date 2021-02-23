@@ -1,15 +1,15 @@
-const db = require('../database/connection.js');
+const db = require("../database/connection.js");
 
 function getAllProducts() {
-	return db.query('SELECT * FROM products');
+  return db.query("SELECT * FROM products");
 }
 
-function getCategory(categoryName) {
-	return db.query('SELECT * FROM  products WHERE category = categoryName');
+function getCategory(category) {
+  return db.query("SELECT * FROM  products WHERE category = $1", [category]);
 }
 
-function getProduct(productName) {
-	return db.query('SELECT * FROM  products WHERE name = productName');
+function getProduct(name) {
+  return db.query("SELECT * FROM  products WHERE name = $1", [name]);
 }
 
 module.exports = { getAllProducts, getCategory, getProduct };
