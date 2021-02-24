@@ -6,10 +6,13 @@ const db = require("../database/connection.js");
 function deletepro(id) {
   return db.query("DELETE * FROM products WHERE id =$1", [id]);
 }
-function getUser()
 
 // Mahmoud
-
+function getUser(email) {
+  const user = db.query("SELECT * FROM users WHERE email = $1", [email]);
+  if (!user.lenght) throw new Error(`No user with email '${email}' found`);
+  return user;
+}
 // Jihad
 
 function signUp(newUser) {
@@ -25,4 +28,4 @@ function signUp(newUser) {
   );
 }
 ////module
-module.exports = { deletepro, signUp, login, logout };
+module.exports = { deletepro, signUp, getUser, logout };
