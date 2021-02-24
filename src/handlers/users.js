@@ -29,6 +29,19 @@ function del(req, res, next) {
 
 // Jihad
 
+function signUp(req, res, next) {
+  const newUser = req.body;
+  console.log(req.body);
+  usersModel
+    .signUp(newUser)
+    .then((user) => {
+      console.log(user);
+      const response = user.rows[0].row;
+
+      res.status(201).send(response);
+    })
+    .catch(next);
+}
 ////module
 
 module.exports = { del, signUp, login, logout };
