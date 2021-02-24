@@ -1,4 +1,5 @@
-const productsModel = require("../model/products.js");
+const productsModel = require("../model/products");
+const usersModel = require("../model/users");
 
 function getAllProducts(req, res, next) {
   productsModel
@@ -29,4 +30,25 @@ function getProduct(req, res, next) {
     .catch(next);
 }
 
-module.exports = { getAllProducts, getCategory, getProduct };
+function del(req, res, next) {
+  const proId = req.params.id;
+  const user = req.body.email;
+  usersModel
+    .getUser(user)
+    .then((user) => {
+      const role = user.rows[0].role;
+      console.log(role);
+      if (role !== "admin") {
+        const error = new Error("You must be admin to delete");
+        res.status(401);
+        next(error);
+      } else {
+        productsModel.deletePro(proId).then(() => {
+          res.status(204).send();
+        });
+      }
+    })
+    .catch(next);
+}
+
+module.exports = { getAllProducts, getCategory, getProduct, del };

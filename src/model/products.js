@@ -12,4 +12,8 @@ function getProduct(name) {
   return db.query("SELECT * FROM  products WHERE name = $1", [name]);
 }
 
-module.exports = { getAllProducts, getCategory, getProduct };
+function deletePro(id) {
+  return db.query("DELETE FROM products WHERE id = $1", [id]);
+}
+
+module.exports = { getAllProducts, getCategory, getProduct, deletePro };
