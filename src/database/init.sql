@@ -1,6 +1,6 @@
 BEGIN;
 
-DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS products, users CASCADE;
 
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,
@@ -11,6 +11,22 @@ CREATE TABLE products (
   category VARCHAR(255)
 
 );
+
+CREATE TABLE users (
+  email VARCHAR(255) PRIMARY KEY,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(255) NOT NULL
+);
+
+INSERT INTO users (email, first_name, last_name, password, role) VALUES
+  ('jihad@gmail.com', 'Jihad', 'Banna', '123123', 'client'),
+  ('Diab@gmail.com', 'Mahmoud', 'Diab','123123', 'admin'),
+  ('alaa@gmail.com', 'Alaa', 'Lathqani', '123123','client'),
+  ('sawaed@gmail.com', 'Mohamad', 'Sawaed', '123123','admin')
+;
+
 
 
 INSERT INTO products ( name , description ,  price,  image ,  category ) VALUES
