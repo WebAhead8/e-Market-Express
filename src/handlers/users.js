@@ -11,7 +11,24 @@ function logOut(req, res) {
 
 // Mahmoud
 function login(req, res, next) {
-	const email = req.body.email;
+
+  const email = req.body.email;
+  const password = req.body.password;
+
+  usersModel
+    .getUser(email)
+    .then((user) => {
+      console.log(user.rows);
+      if (password !== user.rows.password) {
+        const error = new Error("wrong password");
+        res.status(401);
+        next(error);
+      } else {
+        res.status(200).send("LOGGIN successful");
+      }
+    })
+    .catch(next);
+const email = req.body.email;
 	const password = req.body.password;
 
 	usersModel
@@ -26,11 +43,23 @@ function login(req, res, next) {
 			}
 		})
 		.catch(next);
+
 }
 
 // Jihad
 
 function signUp(req, res, next) {
+
+  const newUser = req.body;
+
+  usersModel
+    .signUp(newUser)
+    .then((user) => {
+      const response = user.rows[0].row;
+
+      res.status(201).send(response);
+    })
+    .catch(next);
 	const newUser = req.body;
 	console.log(req.body);
 	usersModel
@@ -42,6 +71,7 @@ function signUp(req, res, next) {
 			res.status(201).send(response);
 		})
 		.catch(next);
+
 }
 ////module
 
