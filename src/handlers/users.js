@@ -12,7 +12,8 @@ function login(req, res, next) {
   usersModel
     .getUser(email)
     .then((user) => {
-      if (password !== user.rows[0].password) {
+      console.log(user.rows);
+      if (password !== user.rows.password) {
         const error = new Error("wrong password");
         res.status(401);
         next(error);
@@ -27,11 +28,10 @@ function login(req, res, next) {
 
 function signUp(req, res, next) {
   const newUser = req.body;
-  console.log(req.body);
+
   usersModel
     .signUp(newUser)
     .then((user) => {
-      console.log(user);
       const response = user.rows[0].row;
 
       res.status(201).send(response);
