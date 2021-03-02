@@ -54,6 +54,8 @@ function del(req, res, next) {
 
 function addItem(req, res, next) {
   const user = "Diab@gmail.com";
+  const newPro = req.body;
+  console.log(user);
   usersModel
     .getUser(user)
     .then((user) => {
@@ -64,7 +66,7 @@ function addItem(req, res, next) {
         res.status(401);
         next(error);
       } else {
-        productsModel.addPro(proId).then(() => {
+        productsModel.addPro(newPro).then(() => {
           res.status(204).send("the item was added");
         });
       }

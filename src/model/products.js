@@ -28,8 +28,4 @@ function addPro(newItem) {
   );
 }
 
-<<<<<<< HEAD
-module.exports = { getAllProducts, getCategory, getProduct, deletePro, addPro };
-=======
-module.exports = { getAllProducts, deletePro };
->>>>>>> main
+module.exports = { getAllProducts, deletePro, addPro };

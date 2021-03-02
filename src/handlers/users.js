@@ -34,21 +34,6 @@ function login(req, res, next) {
       }
     })
     .catch(next);
-  const email = req.body.email;
-  const password = req.body.password;
-
-  usersModel
-    .getUser(email)
-    .then((user) => {
-      if (password !== user.rows[0].password) {
-        const error = new Error("wrong password");
-        res.status(401);
-        next(error);
-      } else {
-        res.status(200).send("LOGGIN successful");
-      }
-    })
-    .catch(next);
 }
 
 // Jihad
@@ -66,17 +51,6 @@ function signUp(req, res, next) {
         email: user.rows.email,
         access_token: token,
       };
-
-      res.status(201).send(response);
-    })
-    .catch(next);
-  const newUser = req.body;
-  console.log(req.body);
-  usersModel
-    .signUp(newUser)
-    .then((user) => {
-      console.log(user);
-      const response = user.rows[0].row;
 
       res.status(201).send(response);
     })
