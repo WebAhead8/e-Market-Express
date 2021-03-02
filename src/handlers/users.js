@@ -1,13 +1,12 @@
 const usersModel = require("../model/users");
 const jwt = require("jsonwebtoken");
-const cookie_parser = require("cookie-parser");
+
+const dotenv = require("dotenv");
+
+dotenv.config();
+const SECRET = process.env.JWT_SECRET;
 
 // Alaa
-function logOut(req, res) {
-  res.clearCookie("jwt", "", { maxAge: 1 });
-  res.status(201).send("Logged Out");
-  res.redirect("/");
-}
 
 // Mahmoud
 function login(req, res, next) {
@@ -34,21 +33,6 @@ function login(req, res, next) {
       }
     })
     .catch(next);
-  const email = req.body.email;
-  const password = req.body.password;
-
-  usersModel
-    .getUser(email)
-    .then((user) => {
-      if (password !== user.rows[0].password) {
-        const error = new Error("wrong password");
-        res.status(401);
-        next(error);
-      } else {
-        res.status(200).send("LOGGIN successful");
-      }
-    })
-    .catch(next);
 }
 
 // Jihad
@@ -60,9 +44,10 @@ function signUp(req, res, next) {
     .signUp(newUser)
     .then((user) => {
       const token = jwt.sign({ user: user.id }, SECRET, { expiresIn: "1h" });
-      const responst = {
+      const response = {
         id: user.rows.id,
-        name: user.rows.name,
+        first_name: user.rows.name,
+        last_name: user.rows.last_name,
         email: user.rows.email,
         access_token: token,
       };
@@ -70,18 +55,7 @@ function signUp(req, res, next) {
       res.status(201).send(response);
     })
     .catch(next);
-  const newUser = req.body;
-  console.log(req.body);
-  usersModel
-    .signUp(newUser)
-    .then((user) => {
-      console.log(user);
-      const response = user.rows[0].row;
-
-      res.status(201).send(response);
-    })
-    .catch(next);
 }
 ////module
 
-module.exports = { signUp, login, logOut };
+module.exports = { signUp, login };
