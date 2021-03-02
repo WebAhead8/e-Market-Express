@@ -17,16 +17,19 @@ server.get("/products", productsHandler.getAllProducts);
 // server.get("/product/:name", productsHandler.getProduct);
 server.delete("/del/:id", productsHandler.del);
 
+//products
 server.get("/products", productsHandler.getAllProducts);
 server.get("/category/:cat", productsHandler.getCategory);
 server.get("/product/:name", productsHandler.getProduct);
+
+//Admin user
 server.delete("/del/:id", productsHandler.del);
 server.post("/addItem", productsHandler.addItem);
 
 // users
 server.post("/login", usersHandler.login);
 server.post("/signup", usersHandler.signUp);
-server.get("/logout", usersHandler.logOut);
+
 server.get("/checkAmin", usersHandler.isAdmin);
 
 server.use(handleError);

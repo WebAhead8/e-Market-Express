@@ -55,7 +55,6 @@ function del(req, res, next) {
 function addItem(req, res, next) {
   const user = "Diab@gmail.com";
   const newPro = req.body;
-  console.log(user);
   usersModel
     .getUser(user)
     .then((user) => {
