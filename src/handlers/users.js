@@ -43,15 +43,8 @@ function signUp(req, res, next) {
   usersModel
     .signUp(newUser)
     .then((user) => {
-<<<<<<< HEAD
       const token = jwt.sign({ user: user.id }, SECRET, { expiresIn: "1h" });
       const response = {
-=======
-      const token = jwt.sign({ user: user.id }, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-      });
-      const responst = {
->>>>>>> main
         id: user.rows.id,
         first_name: user.rows.name,
         last_name: user.rows.last_name,
@@ -71,8 +64,4 @@ function isAdmin(token) {
 
 ////module
 
-<<<<<<< HEAD
-module.exports = { signUp, login };
-=======
 module.exports = { signUp, login, logOut, isAdmin };
->>>>>>> main
