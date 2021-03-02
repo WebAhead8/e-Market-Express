@@ -1,3 +1,4 @@
+const { getMaxListeners } = require("../database/connection");
 const productsModel = require("../model/products");
 const usersModel = require("../model/users");
 
@@ -51,4 +52,24 @@ function del(req, res, next) {
     .catch(next);
 }
 
-module.exports = { getAllProducts, getCategory, getProduct, del };
+function addItem(req, res, next) {
+  const user = "Diab@gmail.com";
+  usersModel
+    .getUser(user)
+    .then((user) => {
+      const role = user.rows[0].role;
+      console.log(role);
+      if (role !== "admin") {
+        const error = new Error("You must be admin to delete");
+        res.status(401);
+        next(error);
+      } else {
+        productsModel.addPro(proId).then(() => {
+          res.status(204).send("the item was added");
+        });
+      }
+    })
+    .catch(next);
+}
+
+module.exports = { getAllProducts, getCategory, getProduct, del, addItem };
