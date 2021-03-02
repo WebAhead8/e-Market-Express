@@ -7,9 +7,9 @@ const db = require("../database/connection.js");
 // Mahmoud
 function getUser(email) {
   return db.query("SELECT * FROM users WHERE email = $1", [email]);
-  //   console.log(user);
-  //   if (!user.lenght) throw new Error(`No user with email '${email}' found`);
-  //   return user;
+  // console.log(user);
+  // if (!user.lenght) throw new Error(`No user with email '${email}' found`);
+  // return user;
 }
 // Jihad
 

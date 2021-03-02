@@ -1,4 +1,7 @@
 const usersModel = require("../model/users");
+const jwt = require("jsonwebtoken");
+
+const SECRET = "";
 
 // Alaa
 
@@ -8,17 +11,24 @@ const usersModel = require("../model/users");
 function login(req, res, next) {
   const email = req.body.email;
   const password = req.body.password;
-
   usersModel
     .getUser(email)
     .then((user) => {
-      console.log(user.rows);
-      if (password !== user.rows.password) {
-        const error = new Error("wrong password");
+      if (!user.rows.length) {
+        const error = new Error("wrong email");
         res.status(401);
         next(error);
       } else {
-        res.status(200).send("LOGGIN successful");
+        if (password !== user.rows[0].password) {
+          const error = new Error("wrong password");
+          res.status(401);
+          next(error);
+        } else {
+          const token = jwt.sign({ user: user.id }, SECRET, {
+            expiresIn: "1h",
+          });
+          res.status(200).send({ access_token: token });
+        }
       }
     })
     .catch(next);
@@ -32,7 +42,13 @@ function signUp(req, res, next) {
   usersModel
     .signUp(newUser)
     .then((user) => {
-      const response = user.rows[0].row;
+      const token = jwt.sign({ user: user.id }, SECRET, { expiresIn: "1h" });
+      const responst = {
+        id: user.rows.id,
+        name: user.rows.name,
+        email: user.rows.email,
+        access_token: token,
+      };
 
       res.status(201).send(response);
     })

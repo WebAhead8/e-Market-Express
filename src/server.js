@@ -10,10 +10,10 @@ const server = express();
 
 server.use(cors());
 server.use(express.json());
+server.use(express.urlencoded());
 
 server.get("/products", productsHandler.getAllProducts);
-// server.get("/category/:cat", productsHandler.getCategory);
-// server.get("/product/:name", productsHandler.getProduct);
+// server.get("/users", usersHandler.getUser);
 server.delete("/del/:id", productsHandler.del);
 
 // users
