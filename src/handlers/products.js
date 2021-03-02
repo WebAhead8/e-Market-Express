@@ -6,7 +6,7 @@ function getAllProducts(req, res, next) {
   productsModel
     .getAllProducts()
     .then((allProducts) => {
-      res.send(allProducts);
+      res.send(allProducts.rows);
     })
     .catch(next);
 }
