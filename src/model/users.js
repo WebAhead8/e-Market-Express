@@ -1,15 +1,15 @@
 const db = require("../database/connection.js");
-
-// Alaa
+const jwt = require("jsonwebtoken");
+const cookie_parser = require("cookie-parser");
 
 // Mohamad
 
 // Mahmoud
 function getUser(email) {
   return db.query("SELECT * FROM users WHERE email = $1", [email]);
-  // console.log(user);
-  // if (!user.lenght) throw new Error(`No user with email '${email}' found`);
-  // return user;
+  //   console.log(user);
+  //   if (!user.lenght) throw new Error(`No user with email '${email}' found`);
+  //   return user;
 }
 // Jihad
 
