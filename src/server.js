@@ -27,6 +27,7 @@ server.post("/addItem", productsHandler.addItem);
 server.post("/login", usersHandler.login);
 server.post("/signup", usersHandler.signUp);
 server.get("/logout", usersHandler.logOut);
+server.get("/checkAmin", usersHandler.isAdmin);
 
 server.use(handleError);
 
