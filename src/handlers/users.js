@@ -25,9 +25,13 @@ function login(req, res, next) {
           res.status(401);
           next(error);
         } else {
-          const token = jwt.sign({ user: user.id }, process.env.JWT_SECRET, {
-            expiresIn: "1h",
-          });
+          const token = jwt.sign(
+            { role: user.rows[0].role, email: user.rows[0].emails },
+            process.env.JWT_SECRET,
+            {
+              expiresIn: "1h",
+            }
+          );
           res.status(200).send({ access_token: token });
         }
       }
@@ -42,13 +46,14 @@ function signUp(req, res, next) {
 
   usersModel
     .signUp(newUser)
-    .then((user) => {
-      const token = jwt.sign({ user: user.id }, SECRET, { expiresIn: "1h" });
+    .then(({ rows }) => {
+      const user = rows[0];
+      const token = jwt.sign({ user: user.role }, SECRET, { expiresIn: "1h" });
       const response = {
-        id: user.rows.id,
-        first_name: user.rows.name,
-        last_name: user.rows.last_name,
-        email: user.rows.email,
+        role: user.role,
+        first_name: user.name,
+        last_name: user.last_name,
+        email: user.email,
         access_token: token,
       };
 
@@ -56,12 +61,12 @@ function signUp(req, res, next) {
     })
     .catch(next);
 }
-function isAdmin(token) {
-  const user = jwt.verify(token);
-  if (user.role === "admin") return true;
-  else return false;
+function isAdmin(req, res, next) {
+  const user = jwt.verify(req.headers.authorization, SECRET);
+  if (user.role === "admin") return res.send(true);
+  else return res.send(false);
 }
 
 ////module
 
-module.exports = { signUp, login, logOut, isAdmin };
+module.exports = { signUp, login, isAdmin };
