@@ -12,8 +12,8 @@ function getAllProducts() {
 //   return db.query("SELECT * FROM  products WHERE name = $1", [name]);
 // }
 
-function deletePro(id) {
-  return db.query("DELETE FROM products WHERE id = $1", [id]);
+function deletePro(name) {
+  return db.query("DELETE FROM products WHERE name = $1", [name]);
 }
 function addPro(newItem) {
   return db.query(
@@ -21,8 +21,8 @@ function addPro(newItem) {
     [
       newItem.name,
       newItem.description,
-      newItem.price,
-      newItem.image,
+      newItem.Price,
+      newItem.imag,
       newItem.category,
     ]
   );
