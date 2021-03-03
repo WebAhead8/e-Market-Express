@@ -31,46 +31,4 @@ function getProduct(req, res, next) {
     .catch(next);
 }
 
-function del(req, res, next) {
-  const proId = req.params.id;
-  const user = req.body.email;
-  usersModel
-    .getUser(user)
-    .then((user) => {
-      const role = user.rows[0].role;
-      console.log(role);
-      if (role !== "admin") {
-        const error = new Error("You must be admin to delete");
-        res.status(401);
-        next(error);
-      } else {
-        productsModel.deletePro(proId).then(() => {
-          res.status(204).send();
-        });
-      }
-    })
-    .catch(next);
-}
-
-function addItem(req, res, next) {
-  const user = "Diab@gmail.com";
-  const newPro = req.body;
-  usersModel
-    .getUser(user)
-    .then((user) => {
-      const role = user.rows[0].role;
-      console.log(role);
-      if (role !== "admin") {
-        const error = new Error("You must be admin to delete");
-        res.status(401);
-        next(error);
-      } else {
-        productsModel.addPro(newPro).then(() => {
-          res.status(204).send("the item was added");
-        });
-      }
-    })
-    .catch(next);
-}
-
-module.exports = { getAllProducts, getCategory, getProduct, del, addItem };
+module.exports = { getAllProducts, getCategory, getProduct };

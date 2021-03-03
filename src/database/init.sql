@@ -6,8 +6,8 @@ CREATE TABLE products (
   id SERIAL PRIMARY KEY,
  name VARCHAR(255) NOT NULL,
  description VARCHAR(255),
-  price INTEGER,
-  image TEXT,
+  price INTEGER NOT NULL,
+  image TEXT NOT NULL, 
   category VARCHAR(255)
 
 );

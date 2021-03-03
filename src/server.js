@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const productsHandler = require("./handlers/products");
 const usersHandler = require("./handlers/users");
+const admainHandler = require("./handlers/admin");
 const handleError = require("./middleware/error");
 
 const PORT = process.env.PORT || 4000;
@@ -15,7 +16,7 @@ server.use(express.urlencoded());
 server.get("/products", productsHandler.getAllProducts);
 // server.get("/category/:cat", productsHandler.getCategory);
 // server.get("/product/:name", productsHandler.getProduct);
-server.delete("/del/:id", productsHandler.del);
+// server.delete("/del/:id", productsHandler.del);
 
 //products
 server.get("/products", productsHandler.getAllProducts);
@@ -23,8 +24,8 @@ server.get("/category/:cat", productsHandler.getCategory);
 server.get("/product/:name", productsHandler.getProduct);
 
 //Admin user
-server.delete("/del/:id", productsHandler.del);
-server.post("/addItem", productsHandler.addItem);
+server.delete("/del", admainHandler.del);
+server.post("/addItem", admainHandler.addItem);
 
 // users
 server.post("/login", usersHandler.login);
