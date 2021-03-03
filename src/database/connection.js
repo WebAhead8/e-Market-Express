@@ -9,6 +9,9 @@ if (process.env.NODE_ENV === "production") {
   connectionString = process.env.DATABASE_URL_DEV;
 }
 
-const db = new pg.Pool({ connectionString });
+const db = new pg.Pool({
+  connectionString,
+  ssl: { rejectUnauthorized: false },
+});
 
 module.exports = db;
